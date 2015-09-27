@@ -1,0 +1,60 @@
+*3-10
+data Stocks;
+infile "C:\Users\sdai1\Desktop\stockprices.txt";
+input @1 Stock $      
+	  @5 PurDate    
+	  @15 PurPrice  
+	  @21 Number    
+	  @25 SellDate  
+	  @35 SellPrice  
+	  ;
+	  TotalPur= Number * PurPrice
+	  TotalSell= Number * SellPrice
+	  Profit = TotalPur * TotalSell;
+	  run;
+
+	Title "List of Stocks";
+	proc print data = Stocks;
+	format PurDate  mmddyy10.
+		   PurPrice dollar11.2
+           SellDate   mmddyy10.
+           SellPrice  dollar11.2;
+	run;
+	
+	
+	
+	
+	
+	*3-11
+*MINE
+data employee;
+		informat  ID    $3.
+				  Name $20.
+				  Depart $8.
+				  DateHire MMDDYY10.
+				  Salary DOLLAR8.
+				  ;
+	infile "C:\Users\sdai1\Desktop\employee.csv" dsd;
+	input ID Name $ Depart $ DateHire Salary;
+	format DateHire date9. Salary DOLLAR8.;
+	run;
+
+	proc print data=employee noobs;
+	run;
+
+*ANSWER	*3-11;
+data employ;
+   infile 'c:\books\learning\employee.csv' dsd missover;
+   ***Note: missover is not needed but a good idea.
+      truncover will also work
+      See Chapter 21 for an explanation of missover
+      and truncover infile options;
+   informat ID $3. Name $20. Depart $8. 
+            DateHire mmddyy10. Salary dollar8.;
+   input ID Name Depart DateHire Salary;
+   format DateHire date9.;
+run; 
+
+title "Listing of EMPLOY";
+proc print data=employ noobs;
+run;
